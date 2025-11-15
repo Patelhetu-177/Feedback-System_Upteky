@@ -8,8 +8,6 @@ A modern feedback collection and management dashboard built with Next.js 14 and 
 - **Dashboard**: View and manage all feedback submissions
 - **Analytics**: Visual representation of feedback data
 - **Responsive Design**: Works on all device sizes
-- **Dark Mode**: Built-in dark and light themes
-
 ## Tech Stack
 
 - **Frontend**: Next.js 14 (App Router), TypeScript

@@ -44,10 +44,15 @@ export function FeedbackForm() {
   const onSubmit = async (data: FeedbackFormValues) => {
     try {
       setIsSubmitting(true);
+      // Ensure rating is a number
       const formData = {
-        ...data,
+        name: data.name,
+        email: data.email,
+        message: data.message,
         rating: Number(data.rating)
       };
+      
+      console.log('Submitting form data:', formData); // Debug log
       
       const response = await fetch('/api/feedback', {
         method: 'POST',
@@ -97,6 +102,9 @@ export function FeedbackForm() {
     name: 'rating',
     defaultValue: 5,
   });
+  
+  // Ensure currentRating is always a number
+  const ratingValue = typeof currentRating === 'string' ? parseInt(currentRating, 10) : currentRating;
 
   return (
     <motion.div
@@ -159,14 +167,17 @@ export function FeedbackForm() {
                   <input
                     type="radio"
                     value={star}
-                    {...register('rating', { 
-                      valueAsNumber: true,
-                      value: star
-                    })}
+                    checked={currentRating === star}
+                    onChange={() => {
+                      // Explicitly set the value as a number
+                      register('rating').onChange({
+                        target: { value: star, name: 'rating' }
+                      });
+                    }}
                     className="sr-only"
                   />
                   <span className="text-2xl">
-                    {star <= (currentRating || 0) ? '★' : '☆'}
+                    {star <= (ratingValue || 0) ? '★' : '☆'}
                   </span>
                 </label>
               ))}
